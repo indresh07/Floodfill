@@ -47,7 +47,6 @@ public:
 	 * Returns the degree of the vertex i
 	 */
   virtual int degree(int i) = 0;
-  virtual void display() = 0;
   /*
    * Function: getAdjacent
    * Returns array of adjacent nodes of vertex i

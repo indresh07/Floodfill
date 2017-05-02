@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <climits>
 
 namespace cs202 {
     template<class T>
@@ -221,8 +222,7 @@ namespace cs202 {
             }   
         }
 
-        return size_;
-       
+        return INT_MAX;
     }
 
     template<class T>void  LinearList<T> :: erase(const T& item){                                                             

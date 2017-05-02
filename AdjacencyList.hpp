@@ -3,6 +3,7 @@
 #include "GraphAdjacencyBase.hpp"
 
 using namespace cs202;
+using namespace std;
 
 class AdjacencyList : public GraphAdjacencyBase {
 
@@ -45,18 +46,23 @@ public:
 	 * Returns the degree of the vertex i
 	 */
 	int degree(int i);
+	/*
+     * Function: getAdjacent
+     * Returns array of adjacent nodes of vertex i
+     */ 
+	LinearList<LinearList<int> > getAdjacent();
+
 	void display(){
 		for(int i = 0; i < nVertices; i++){
 			node<int>* iterator = adjList[i].getIterator();
 
-			for(int j = 0; j < adjList[i].length(); j++, iterator = iterator->next)
-				cout<<iterator->data<<" ";			
-
+			while(iterator){
+				cout<<iterator->data<<" ";
+				iterator = iterator->next;
+			}			
 			cout<<"\n";
 		}
 	}
-
-	LinearList<LinearList<int> > getAdjacent();
 };
 
 AdjacencyList::AdjacencyList(int v){

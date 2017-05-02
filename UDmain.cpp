@@ -43,77 +43,65 @@ int main(){
 	UndirectedGraph graph(nVertices, mode);
 
 	while(1){
-		switch(options()){
+		try{
+			switch(options()){
 
-			case 1 :	cout<<"Enter source : ";
-						cin>>src;
-						cout<<"Enter destination : ";
-						cin>>dest;
+				case 1 :	cout<<"Enter source : ";
+							cin>>src;
+							cout<<"Enter destination : ";
+							cin>>dest;
 
-						try{
 							graph.add(src, dest);
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
-						break;
+						
+							break;
 
-			case 2 :	cout<<"Enter source : ";
-						cin>>src;
-						cout<<"Enter destination : ";
-						cin>>dest;
+				case 2 :	cout<<"Enter source : ";
+							cin>>src;
+							cout<<"Enter destination : ";
+							cin>>dest;
 
-						try{
 							graph.remove(src, dest);
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
-						break;
+							
+							break;
 
-			case 3 :	cout<<"Enter source : ";
-						cin>>src;
-						cout<<"Enter destination : ";
-						cin>>dest;
+				case 3 :	cout<<"Enter source : ";
+							cin>>src;
+							cout<<"Enter destination : ";
+							cin>>dest;
 
-						try{
 							if(graph.edgeExists(src, dest))
 								cout<<"Edge exists.";
 							else
 								cout<<"Edge does not exists.";
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
-						break;
+						
+							break;
 
-			case 4 :	cout<<"Enter vertex : ";
-						cin>>src;
+				case 4 :	cout<<"Enter vertex : ";
+							cin>>src;
 
-						try{
 							cout<<"Degree["<<src<<"] : "<<graph.degree(src);
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
-						break;
+							break;
 
-			case 5 :	cout<<graph.vertices();
-						break;
+				case 5 :	cout<<graph.vertices();
+							break;
 
-			case 6 :	cout<<graph.edges();
-						break;
+				case 6 :	cout<<graph.edges();
+							break;
 
-			case 7 :	graph.dfs(print);
-						break;
+				case 7 :	graph.dfs(print);
+							break;
 
-			case 8 :	graph.bfs(print);
-						break;
+				case 8 :	graph.bfs(print);
+							break;
 
-			case 0 :	exit(EXIT_SUCCESS);
+				case 0 :	exit(EXIT_SUCCESS);
 
-			default :	cout<<"Invalid Choice.";
+				default :	cout<<"Invalid Choice.";
 
+			}
+		}
+		catch(const char* err){
+			cout<<err<<endl;
 		}
 	}
 

@@ -45,16 +45,10 @@ public:
 	 * Returns the degree of the vertex i
 	 */
 	int degree(int i);
-
-	void display(){
-		for(int i = 0; i < nVertices; i++){
-			for(int j = 0; j < nVertices; j++)
-				cout<<adjMatrix[i][j]<<" ";
-
-			cout<<"\n";
-		}
-	}
-
+    /*
+    * Function: getAdjacent
+    * Returns array of adjacent nodes of vertex i
+    */ 
 	LinearList<LinearList<int> > getAdjacent();
 };
 

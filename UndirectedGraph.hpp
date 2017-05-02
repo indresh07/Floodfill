@@ -70,10 +70,6 @@ class UndirectedGraph : public AbstractGraph {
    * Runs the given function work, with the value of each vertex.
    */
   void bfs(void (*work)(int&));
-
-  void display(){
-    graph->display();
-  }
 };
 
 UndirectedGraph::UndirectedGraph(int numVertices, char rep){
