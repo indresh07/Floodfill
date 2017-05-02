@@ -9,15 +9,6 @@ class UndirectedGraph : public AbstractGraph {
  private:
 
   GraphAdjacencyBase* graph;
-  
-  int getIndex(int i){
-
-    for(int j = 0; j < graph->vertices(); j++)
-      if(AbstractGraph::verticesMap[j] == i)
-        return j;
-
-    return -1;
-  } 
 
  public:
   /*
@@ -74,8 +65,6 @@ class UndirectedGraph : public AbstractGraph {
 
 UndirectedGraph::UndirectedGraph(int numVertices, char rep){
 
-  AbstractGraph::verticesMap.resize(numVertices);
-
   if(rep != 'm' && rep != 'M' && rep != 'l' && rep != 'L'){
     cout<<"**Invalid mode. Using adjacency list mode as default.\n";
     rep = 'l';
@@ -87,36 +76,19 @@ UndirectedGraph::UndirectedGraph(int numVertices, char rep){
   else{
     graph = new AdjacencyList(numVertices); 
   }
-
-  cout<<"Enter vertices : \n";
-  int vertex;
-  for(int i = 0; i < numVertices; i++){
-    cout<<"["<<i+1<<"] : ";
-    cin>>vertex;
-    AbstractGraph::verticesMap.push_back(vertex);
-  }
 }
 
 int UndirectedGraph::degree(int i){
 
-  int src = getIndex(i);
-  if(src == -1)
-    throw "Vertex not found.";
-
   if(edgeExists(i, i))
-    return (graph->degree(src) + 3) / 2;
+    return (graph->degree(i) + 3) / 2;
   else
-    return graph->degree(src) / 2;
+    return graph->degree(i) / 2;
 }
 
 bool UndirectedGraph::edgeExists(int i, int j){
-  int src = getIndex(i);
-  int dest = getIndex(j);
 
-  if(src == -1 || dest == -1)
-    throw "Source/Destination not found.";
-
-  return graph->edgeExists(src, dest);
+  return graph->edgeExists(i, j);
 }
 
 int UndirectedGraph::edges(){
@@ -131,28 +103,16 @@ int UndirectedGraph::vertices(){
 
 void UndirectedGraph::add(int i, int j){
 
-  int src = getIndex(i);
-  int dest = getIndex(j);
-
-  if(src == -1 || dest == -1)
-    throw "Source/Destination not found.";
-
-  graph->add(src, dest);
+  graph->add(i, j);
 
   if(i != j)
-    graph->add(dest, src);
+    graph->add(j, i);
 }
 
 void UndirectedGraph::remove(int i, int j){
 
-  int src = getIndex(i);
-  int dest = getIndex(j);
-
-  if(src == -1 || dest == -1)
-    throw "Source/Destination not found.";
-
-  graph->remove(src, dest);
-  graph->remove(dest, src);
+  graph->remove(i, j);
+  graph->remove(j, i);
 }
 
 void UndirectedGraph::dfs(void (*work)(int&)){
@@ -178,7 +138,7 @@ void UndirectedGraph::dfs(void (*work)(int&)){
         if(color[j] == WHITE){
           dfsStack.push(j);
           color[j] = GRAY;
-          (*work)(AbstractGraph::verticesMap[j]);
+          (*work)(j);
         }
       }
       else{
@@ -192,7 +152,7 @@ void UndirectedGraph::dfs(void (*work)(int&)){
       if(color[j] == WHITE){
         allVisited = false;
         dfsStack.push(j);
-        (*work)(AbstractGraph::verticesMap[j]);
+        (*work)(j);
         color[j] = GRAY;
         break;
       }
@@ -222,7 +182,7 @@ void UndirectedGraph::bfs(void (*work)(int&)){
         if(color[j] == WHITE){
           bfsQueue.push(j);
           color[j] = GRAY;
-          (*work)(AbstractGraph::verticesMap[j]);
+          (*work)(j);
         }
       }
       else{
@@ -236,7 +196,7 @@ void UndirectedGraph::bfs(void (*work)(int&)){
       if(color[j] == WHITE){
         allVisited = false;
         bfsQueue.push(j);
-        (*work)(AbstractGraph::verticesMap[j]);
+        (*work)(j);
         color[j] = GRAY;
         break;
       }

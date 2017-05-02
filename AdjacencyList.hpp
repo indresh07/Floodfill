@@ -101,16 +101,12 @@ void AdjacencyList::add(int i, int j){
 
 	if(!edgeExists(i, j))
 		adjList[i].append(j);
-	else
-		throw "Edge already exists";
 }
 
 void AdjacencyList::remove(int i, int j){
 
-	if(!edgeExists(i, j))
+	if(edgeExists(i, j))
 		adjList[i].remove(j);
-	else
-		throw "Edge does not exists";
 }
 
 int AdjacencyList::degree(int i){

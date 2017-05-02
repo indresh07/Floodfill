@@ -104,18 +104,14 @@ int AdjacencyMatrix::edges(){
 
 void AdjacencyMatrix::add(int i, int j){
 
-	if(adjMatrix[i][j] == 0)
+	if(!edgeExists(i, j))
 		adjMatrix[i][j] = 1;
-	else
-		throw "Edge already exists.";
 }
 
 void AdjacencyMatrix::remove(int i, int j){
 
-	if(adjMatrix[i][j] == 1)
+	if(edgeExists(i, j))
 		adjMatrix[i][j] = 0;
-	else
-		throw "Edge does not  exists.";
 }
 
 int AdjacencyMatrix::degree(int i){

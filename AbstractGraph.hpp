@@ -14,7 +14,6 @@ enum Color {WHITE, GRAY, BLACK};
  */
 class AbstractGraph {
  public:
-  LinearList<int> verticesMap;
   /* Destructor:
    * releases all resources acquired by the class
    */
@@ -56,6 +55,5 @@ class AbstractGraph {
    * Runs the given function work, with the value of each vertex.
    */
   virtual void bfs(void (*work)(int&)) = 0;
-  virtual void display() = 0;
 };
 #endif /* ifndef ABSTRACT_GRAPH */

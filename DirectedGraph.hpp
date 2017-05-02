@@ -12,14 +12,6 @@ private:
 
   GraphAdjacencyBase* graph;
 
-  int getIndex(int i){
-    for(int j = 0; j < graph->vertices(); j++)
-    if(AbstractGraph::verticesMap[j] == i){
-      return j;
-    }  
-
-    return -1;
-  }
 public:
   /*
    * Constructor: DirectedGraph
@@ -81,8 +73,6 @@ public:
 
 DirectedGraph::DirectedGraph(int numVertices, char rep){
 
-  AbstractGraph::verticesMap.resize(numVertices);
-
   if(rep != 'm' && rep != 'M' && rep != 'l' && rep != 'L'){
     cout<<"**Invalid mode. Using adjacency list mode as default.\n";
     rep = 'l';
@@ -94,25 +84,13 @@ DirectedGraph::DirectedGraph(int numVertices, char rep){
   else{
     graph = new AdjacencyList(numVertices); 
   }
-
-  cout<<"Enter vertices : \n";
-  int vertex;
-  for(int i = 0; i < numVertices; i++){
-    cout<<"["<<i+1<<"] : ";
-    cin>>vertex;
-    AbstractGraph::verticesMap.push_back(vertex);
-  }
 }
 
 int DirectedGraph::indegree(int i){
 
-  int src = getIndex(i);
-  if(src == -1)
-    throw "Vertex not found.";
-
   int degree = 0;
   for(int j = 0; j < graph->vertices(); j++){
-    if(j != src && graph->edgeExists(j, src))
+    if(j != i && graph->edgeExists(j, i))
       degree++;
   }
 
@@ -121,13 +99,9 @@ int DirectedGraph::indegree(int i){
 
 int DirectedGraph::outdegree(int i){
 
-  int src = getIndex(i);
-  if(src == -1)
-    throw "Vertex not found.";
-
   int degree = 0;
   for(int j = 0; j < graph->vertices(); j++){
-    if(j != src && graph->edgeExists(src, j))
+    if(j != i && graph->edgeExists(i, j))
       degree++;
   }
 
@@ -135,13 +109,8 @@ int DirectedGraph::outdegree(int i){
 }
 
 bool DirectedGraph::edgeExists(int i, int j){
-  int src = getIndex(i);
-  int dest = getIndex(j);
 
-  if(src == -1 || dest == -1)
-    throw "Source/Destination not found.";
-
-  return graph->edgeExists(src, dest);
+  return graph->edgeExists(i, j);
 }
 
 int DirectedGraph::edges(){
@@ -156,24 +125,12 @@ int DirectedGraph::vertices(){
 
 void DirectedGraph::add(int i, int j){
 
-  int src = getIndex(i);
-  int dest = getIndex(j);
-
-  if(src == -1 || dest == -1)
-    throw "Source/Destination not found.";
-
-  graph->add(src, dest);
+  graph->add(i, j);
 }
 
 void DirectedGraph::remove(int i, int j){
 
-  int src = getIndex(i);
-  int dest = getIndex(j);
-
-  if(src == -1 || dest == -1)
-    throw "Source/Destination not found.";
-
-  graph->remove(src, dest);
+  graph->remove(i, j);
 }
 
 void DirectedGraph::dfs(void (*work)(int&)){
@@ -199,7 +156,7 @@ void DirectedGraph::dfs(void (*work)(int&)){
         if(color[j] == WHITE){
           dfsStack.push(j);
           color[j] = GRAY;
-          (*work)(AbstractGraph::verticesMap[j]);
+          (*work)(j);
         }
       }
       else{
@@ -213,7 +170,7 @@ void DirectedGraph::dfs(void (*work)(int&)){
       if(color[j] == WHITE){
         allVisited = false;
         dfsStack.push(j);
-        (*work)(AbstractGraph::verticesMap[j]);
+        (*work)(j);
         color[j] = GRAY;
         break;
       }
@@ -243,7 +200,7 @@ void DirectedGraph::bfs(void (*work)(int&)){
         if(color[j] == WHITE){
           bfsQueue.push(j);
           color[j] = GRAY;
-          (*work)(AbstractGraph::verticesMap[j]);
+          (*work)(j);
         }
       }
       else{
@@ -257,7 +214,7 @@ void DirectedGraph::bfs(void (*work)(int&)){
       if(color[j] == WHITE){
         allVisited = false;
         bfsQueue.push(j);
-        (*work)(AbstractGraph::verticesMap[j]);
+        (*work)(j);
         color[j] = GRAY;
         break;
       }

@@ -1,8 +1,33 @@
 #include <iostream>
 #include <stdlib.h>
+#include <fstream>
+#include <string>
 #include "UndirectedGraph.hpp"
 
 using namespace std;
+
+void readFromFile(UndirectedGraph& graph){
+
+	ifstream read;
+
+	string filePath;
+
+	cout<<"Enter address of input file : ";
+	cin>>filePath;
+
+	read.open(filePath.c_str(), ios::in);
+
+	int data, counter = 0;
+	while(!read.eof()){
+
+		read >> data;
+
+		if(data == 1)
+			graph.add(counter/graph.vertices(), counter%graph.vertices());
+		
+		counter++;
+	}
+}
 
 int options(){
 
@@ -33,75 +58,76 @@ int main(){
 	char mode;
 	int src, dest;
 
+	cout<<"Enter mode of implementation(m: Adjacency matrix | l: Adjacency list) : ";
+	cin>>mode;
 
 	cout<<"Enter no. of vertices : ";
 	cin>>nVertices;
 	
-	cout<<"Enter mode of implementation(m: Adjacency matrix | l: Adjacency list) : ";
-	cin>>mode;
-
 	UndirectedGraph graph(nVertices, mode);
 
+	char choice;
+	cout<<"Do you want to give input from file (y/n) : ";
+	cin>>choice;
+
+	if(choice == 'y' || choice == 'Y')
+		readFromFile(graph);
+
 	while(1){
-		try{
-			switch(options()){
+		switch(options()){
 
-				case 1 :	cout<<"Enter source : ";
-							cin>>src;
-							cout<<"Enter destination : ";
-							cin>>dest;
+			case 1 :	cout<<"Enter source : ";
+						cin>>src;
+						cout<<"Enter destination : ";
+						cin>>dest;
 
-							graph.add(src, dest);
+						graph.add(src, dest);
+					
+						break;
+
+			case 2 :	cout<<"Enter source : ";
+						cin>>src;
+						cout<<"Enter destination : ";
+						cin>>dest;
+
+						graph.remove(src, dest);
 						
-							break;
+						break;
 
-				case 2 :	cout<<"Enter source : ";
-							cin>>src;
-							cout<<"Enter destination : ";
-							cin>>dest;
+			case 3 :	cout<<"Enter source : ";
+						cin>>src;
+						cout<<"Enter destination : ";
+						cin>>dest;
 
-							graph.remove(src, dest);
-							
-							break;
+						if(graph.edgeExists(src, dest))
+							cout<<"Edge exists.";
+						else
+							cout<<"Edge does not exists.";
+					
+						break;
 
-				case 3 :	cout<<"Enter source : ";
-							cin>>src;
-							cout<<"Enter destination : ";
-							cin>>dest;
+			case 4 :	cout<<"Enter vertex : ";
+						cin>>src;
 
-							if(graph.edgeExists(src, dest))
-								cout<<"Edge exists.";
-							else
-								cout<<"Edge does not exists.";
-						
-							break;
+						cout<<"Degree["<<src<<"] : "<<graph.degree(src);
+						break;
 
-				case 4 :	cout<<"Enter vertex : ";
-							cin>>src;
+			case 5 :	cout<<graph.vertices();
+						break;
 
-							cout<<"Degree["<<src<<"] : "<<graph.degree(src);
-							break;
+			case 6 :	cout<<graph.edges();
+						break;
 
-				case 5 :	cout<<graph.vertices();
-							break;
+			case 7 :	graph.dfs(print);
+						break;
 
-				case 6 :	cout<<graph.edges();
-							break;
+			case 8 :	graph.bfs(print);
+						break;
 
-				case 7 :	graph.dfs(print);
-							break;
+			case 0 :	exit(EXIT_SUCCESS);
 
-				case 8 :	graph.bfs(print);
-							break;
+			default :	cout<<"Invalid Choice.";
 
-				case 0 :	exit(EXIT_SUCCESS);
-
-				default :	cout<<"Invalid Choice.";
-
-			}
-		}
-		catch(const char* err){
-			cout<<err<<endl;
 		}
 	}
 

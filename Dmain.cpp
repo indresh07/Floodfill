@@ -1,8 +1,32 @@
 #include <iostream>
+#include <fstream>
 #include <stdlib.h>
 #include "DirectedGraph.hpp"
 
 using namespace std;
+
+void readFromFile(DirectedGraph& graph){
+
+	ifstream read;
+
+	string filePath;
+
+	cout<<"Enter address of input file : ";
+	cin>>filePath;
+
+	read.open(filePath.c_str(), ios::in);
+
+	int data, counter = 0;
+	while(!read.eof()){
+
+		read >> data;
+
+		if(data == 1)
+			graph.add(counter/graph.vertices(), counter%graph.vertices());
+		
+		counter++;
+	}
+}
 
 int options(){
 
@@ -34,14 +58,20 @@ int main(){
 	char mode;
 	int src, dest;
 
+	cout<<"Mode of implementation(m: Adjacency matrix | l: Adjacency list) : ";
+	cin>>mode;
 
 	cout<<"Enter no. of vertices : ";
 	cin>>nVertices;
 	
-	cout<<"Enter mode of implementation(m: Adjacency matrix | l: Adjacency list) : ";
-	cin>>mode;
-
 	DirectedGraph graph(nVertices, mode);
+
+	char choice;
+	cout<<"Do you want to give input from file (y/n) : ";
+	cin>>choice;
+
+	if(choice == 'y' || choice == 'Y')
+		readFromFile(graph);
 
 	while(1){
 		switch(options()){
@@ -77,43 +107,31 @@ int main(){
 						cout<<"Enter destination : ";
 						cin>>dest;
 
-						try{
-							if(graph.edgeExists(src, dest))
-								cout<<"Edge exists.";
-							else
-								cout<<"Edge does not exists.";
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
+						if(graph.edgeExists(src, dest))
+							cout<<"Edge exists.\n";
+						else
+							cout<<"Edge does not exists.\n";
+
 						break;
 
 			case 4 :	cout<<"Enter vertex : ";
 						cin>>src;
 
-						try{
-							cout<<"In Degree["<<src<<"] : "<<graph.indegree(src);
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
+						cout<<"In Degree["<<src<<"] : "<<graph.indegree(src)<<endl;
+	
 						break;
 
 			case 5 :	cout<<"Enter vertex : ";
 						cin>>src;
 
-						try{
-							cout<<"Out Degree["<<src<<"] : "<<graph.outdegree(src);
-						}
-						catch(const char* err){
-							cout<<err<<endl;
-						}
+						cout<<"Out Degree["<<src<<"] : "<<graph.outdegree(src)<<endl;
+						
 						break;
 
-			case 6 :	cout<<graph.vertices();
+			case 6 :	cout<<graph.vertices()<<endl;
 						break;
 
-			case 7 :	cout<<graph.edges();
+			case 7 :	cout<<graph.edges()<<endl;
 						break;
 
 			case 8 :	graph.dfs(print);
@@ -124,7 +142,7 @@ int main(){
 
 			case 0 :	exit(EXIT_SUCCESS);
 
-			default :	cout<<"Invalid Choice.";
+			default :	cout<<"Invalid Choice.\n";
 
 		}
 	}
