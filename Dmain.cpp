@@ -16,6 +16,11 @@ void readFromFile(DirectedGraph& graph){
 
 	read.open(filePath.c_str(), ios::in);
 
+	if(!read.is_open()){
+		cout<<"Invalid file.\n";
+		return;
+	}
+
 	int data, counter = 0;
 	while(!read.eof()){
 
