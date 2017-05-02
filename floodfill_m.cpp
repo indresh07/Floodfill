@@ -4,28 +4,45 @@
 
 using namespace std;
 
+void print(int**& matrix, int m, int n){
+
+	for(int i = 0; i < m; i++){
+		for (int j = 0; j < n; j++){
+			
+			if(matrix[i][j] == 2)
+				cout<<"P ";
+			
+			if(matrix[i][j] == 1)
+				cout<<"X ";
+
+			if(matrix[i][j] == 0)
+				cout<<"O ";
+		}
+		cout<<endl;
+	}
+}
+
 bool floodfill(int**& matrix, int m, int n, int srcr, int srcc, int destr, int destc){
 
 	static bool print = false, change = false;
-	if(srcc < 0 || srcc >= n)
+	if(srcc < 0 || srcc >= n || srcr < 0 || srcr >= m)
 		return false;
 
-	if(srcr < 0 || srcr >= m)
-		return false;
+	if(destc < 0 || destc >= n || destr < 0 || destr >= m)
+		return false;	
 
-	if(matrix[srcr][srcc] == 1){
+	if(matrix[srcr][srcc] == 1 || matrix[srcr][srcc] == 2){
 		print = true;
 		return false;
 	}
 	else
-		matrix[srcr][srcc] = 1;
+		matrix[srcr][srcc] = 2;
 
 	print = false;
 
 	cout<<"Move to ("<<srcr<<","<<srcc<<")\n";
 
-	int n_srcr, n_srcc;
-	int pos = 0, counter = 0, flag[8];
+	int n_srcr, n_srcc, pos = 0, counter = 0, flag[8];
 
 	for(int i = 0; i < 8; i++)
 		flag[i] = 0;
@@ -133,8 +150,11 @@ int main(){
 	cout<<"Destination coordinates : ";
 	cin>>destr>>destc;
 
-	if(floodfill(matrix, m, n, srcr, srcc, destr, destc))
-		cout<<"Destination reached.\n";
+	cout<<"\nPath traversed :\n";
+	if(floodfill(matrix, m, n, srcr, srcc, destr, destc)){
+		cout<<"Destination can be reached.\n\n";
+		print(matrix, m, n);
+	}
 	else
 		cout<<"Destination can't be reached.\n";
 
