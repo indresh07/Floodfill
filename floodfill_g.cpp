@@ -127,10 +127,18 @@ int main(){
 	int src, dest;
 	cout<<"Enter source : ";
 	cin>>x>>y;
+
+	if( x < 0 || x >= n || y < 0 || y >= m)
+		return 0;
+	
 	src = (x-1)*n + y - 1;
 
 	cout<<"Enter destination : ";
 	cin>>x>>y;
+
+	if( x < 0 || x >= n || y < 0 || y >= m)
+		return 0;
+
 	dest = (x-1)*n + y - 1;
 
 	if(floodfill(matrix, src, dest, print))
