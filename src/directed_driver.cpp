@@ -1,12 +1,17 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Driver program to check functionality of directed graph library
+    Version : 1.1
+
+*/
+
 #include <iostream>
-#include <stdlib.h>
 #include <fstream>
-#include <string>
-#include "UndirectedGraph.hpp"
+#include <stdlib.h>
+#include "../include/DirectedGraph.hpp"
 
 using namespace std;
 
-void readFromFile(UndirectedGraph& graph){
+void readFromFile(DirectedGraph& graph){
 
 	ifstream read;
 
@@ -39,11 +44,12 @@ int options(){
 	cout<<"\n[1] Add an edge\n";
 	cout<<"[2] Remove an edge\n";
 	cout<<"[3] Check an edge\n";
-	cout<<"[4] Degree of a vertex\n";
-	cout<<"[5] No. of vertices\n";
-	cout<<"[6] No. of edges\n";
-	cout<<"[7] DFS\n";
-	cout<<"[8] BFS\n";
+	cout<<"[4] In Degree of a vertex\n";
+	cout<<"[5] Out Degree of a vertex\n";
+	cout<<"[6] No. of vertices\n";
+	cout<<"[7] No. of edges\n";
+	cout<<"[8] DFS\n";
+	cout<<"[9] BFS\n";
 	cout<<"[0] Exit\n";
 
 	int choice;
@@ -54,7 +60,7 @@ int options(){
 }
 
 void print(int& i){
-	cout<<i<<"\n";
+	cout<<i<<endl;
 }
 
 int main(){
@@ -63,13 +69,13 @@ int main(){
 	char mode;
 	int src, dest;
 
-	cout<<"Enter mode of implementation(m: Adjacency matrix | l: Adjacency list) : ";
+	cout<<"Mode of implementation(m: Adjacency matrix | l: Adjacency list) : ";
 	cin>>mode;
 
 	cout<<"Enter no. of vertices : ";
 	cin>>nVertices;
 	
-	UndirectedGraph graph(nVertices, mode);
+	DirectedGraph graph(nVertices, mode);
 
 	char choice;
 	cout<<"Do you want to give input from file (y/n) : ";
@@ -86,8 +92,12 @@ int main(){
 						cout<<"Enter destination : ";
 						cin>>dest;
 
-						graph.add(src, dest);
-					
+						try{
+							graph.add(src, dest);
+						}
+						catch(const char* err){
+							cout<<err<<endl;
+						}
 						break;
 
 			case 2 :	cout<<"Enter source : ";
@@ -95,8 +105,12 @@ int main(){
 						cout<<"Enter destination : ";
 						cin>>dest;
 
-						graph.remove(src, dest);
-						
+						try{
+							graph.remove(src, dest);
+						}
+						catch(const char* err){
+							cout<<err<<endl;
+						}
 						break;
 
 			case 3 :	cout<<"Enter source : ";
@@ -105,33 +119,41 @@ int main(){
 						cin>>dest;
 
 						if(graph.edgeExists(src, dest))
-							cout<<"Edge exists.";
+							cout<<"Edge exists.\n";
 						else
-							cout<<"Edge does not exists.";
-					
+							cout<<"Edge does not exists.\n";
+
 						break;
 
 			case 4 :	cout<<"Enter vertex : ";
 						cin>>src;
 
-						cout<<"Degree["<<src<<"] : "<<graph.degree(src);
+						cout<<"In Degree["<<src<<"] : "<<graph.indegree(src)<<endl;
+	
 						break;
 
-			case 5 :	cout<<graph.vertices();
+			case 5 :	cout<<"Enter vertex : ";
+						cin>>src;
+
+						cout<<"Out Degree["<<src<<"] : "<<graph.outdegree(src)<<endl;
+						
 						break;
 
-			case 6 :	cout<<graph.edges();
+			case 6 :	cout<<graph.vertices()<<endl;
 						break;
 
-			case 7 :	graph.dfs(print);
+			case 7 :	cout<<graph.edges()<<endl;
 						break;
 
-			case 8 :	graph.bfs(print);
+			case 8 :	graph.dfs(print);
+						break;
+
+			case 9 :	graph.bfs(print);
 						break;
 
 			case 0 :	exit(EXIT_SUCCESS);
 
-			default :	cout<<"Invalid Choice.";
+			default :	cout<<"Invalid Choice.\n";
 
 		}
 	}

@@ -1,21 +1,25 @@
-all: UDmain.o Dmain.o floodfill_g.o floodfill_m.o
-	g++ -w -o ud.out UDmain.o -Wno-deprecated
-	g++ -w -o d.out Dmain.o -Wno-deprecated
-	g++ -w -o ffg.out floodfill_g.o -Wno-deprecated
-	g++ -w -o ffm.out floodfill_m.o -Wno-deprecated 
+#  Author : Indresh Kumar Gupta
+#  Purpose : To compile all the cpp files
+#  Version : 1.1
 
-Dmain.o: Dmain.cpp
-	g++ -c Dmain.cpp -Wno-deprecated
+all: obj/undirected_driver.o obj/directed_driver.o obj/floodfill_g.o obj/floodfill_m.o
+	g++ -w -o bin/undirected_driver.out obj/undirected_driver.o -Wno-deprecated
+	g++ -w -o bin/directed_driver.out obj/directed_driver.o -Wno-deprecated
+	g++ -w -o bin/floodfill_g.out obj/floodfill_g.o -Wno-deprecated
+	g++ -w -o bin/floodfill_m.out obj/floodfill_m.o -Wno-deprecated 
 
-UDmain.o: UDmain.cpp
-	g++ -c UDmain.cpp -Wno-deprecated
+obj/directed_driver.o: src/directed_driver.cpp
+	g++ -c -o obj/directed_driver.o src/directed_driver.cpp -Wno-deprecated
 
-floodfill_g.o: floodfill_g.cpp
-	g++ -c floodfill_g.cpp -Wno-deprecated
+obj/undirected_driver.o: src/undirected_driver.cpp
+	g++ -c -o  obj/undirected_driver.o src/undirected_driver.cpp -Wno-deprecated
 
-floodfill_m.o: floodfill_m.cpp
-	g++ -c floodfill_m.cpp -Wno-deprecated
+obj/floodfill_g.o: src/floodfill_g.cpp
+	g++ -c -o obj/floodfill_g.o src/floodfill_g.cpp -Wno-deprecated
+
+obj/floodfill_m.o: src/floodfill_m.cpp
+	g++ -c -o obj/floodfill_m.o src/floodfill_m.cpp -Wno-deprecated
 
 clean:
-	rm -f *.o 
-	rm -f *.out
+	rm -f obj/*.o
+	rm -f bin/*.out

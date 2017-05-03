@@ -1,3 +1,8 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Abstract class for implementation of graph using adjacency matrix and adjacency list
+    Version : 1.0
+
+*/
 #ifndef GRAPH_ADJACENCY_BAG
 #define GRAPH_ADJACENCY_BAG 1
 

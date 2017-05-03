@@ -1,3 +1,8 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Implementation of linked list data structure
+    Version : 1.2
+
+*/
 /*
  * queue.hpp
  *

@@ -1,9 +1,14 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Algorithm to solve flood fill problem using adjacency list representation of graph (traversal using DFS)
+    Version : 1.2
+
+*/
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
 
-#include "AdjacencyList.hpp"
-#include "stack.hpp"
+#include "../include/AdjacencyList.hpp"
+#include "../include/stack.hpp"
 
 using namespace std;
 using namespace cs202;

@@ -1,3 +1,9 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Abstract class for both directed and undirected graph
+    Version : 1.0
+
+*/
+
 #ifndef ABSTRACT_GRAPH
 #define ABSTRACT_GRAPH 1
 

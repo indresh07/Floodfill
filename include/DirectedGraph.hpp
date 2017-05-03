@@ -1,30 +1,45 @@
-#ifndef UNDIRECTED_GRAPH
-#define UNDIRECTED_GRAPH 1
-/*
- * A class to represent an UndirectedGraph
- * Subclasses AbstractGraph
- */
+/*  Author : Indresh Kumar Gupta
+    Purpose : Implementation of directed graph using both adjacency
+              list and adjacency matrix representation
+    Version : 1.2
+
+*/
+
+#ifndef DIRECTED_GRAPH
+#define DIRECTED_GRAPH 1
 #include "AbstractGraph.hpp"
-class UndirectedGraph : public AbstractGraph {
- private:
+
+using namespace std;
+using namespace cs202;
+/*
+ * A class to represent a directed graph.
+ */
+class DirectedGraph : public AbstractGraph {
+private:
 
   GraphAdjacencyBase* graph;
 
- public:
+public:
   /*
-   * Constructor: UndirectedGraph
+   * Constructor: DirectedGraph
    *
    * Parameters: mode
    * Used to decide which representation to use
    * 'm' for AdjacencyMatrix
    * 'l' for AdjacencyList
    */
-  UndirectedGraph(int vertices, char mode);
+  DirectedGraph(int numVertices, char rep);
   /*
-   * Returns the degree of the vertex.
+   * Function: indegree
+   * Returns the indegree of a vertex
    */
-  int degree(int i);
-    /*
+  int indegree(int i);
+  /*
+   * Function: outdegree
+   * Returns the outdegree of a vertex.
+   */
+  int outdegree(int i);
+  /*
    * Function: edgeExists
    * Returns true if an edge exists between vertices i and j, false otherwise.
    */
@@ -63,7 +78,7 @@ class UndirectedGraph : public AbstractGraph {
   void bfs(void (*work)(int&));
 };
 
-UndirectedGraph::UndirectedGraph(int numVertices, char rep){
+DirectedGraph::DirectedGraph(int numVertices, char rep){
 
   if(rep != 'm' && rep != 'M' && rep != 'l' && rep != 'L'){
     cout<<"**Invalid mode. Using adjacency list mode as default.\n";
@@ -78,44 +93,54 @@ UndirectedGraph::UndirectedGraph(int numVertices, char rep){
   }
 }
 
-int UndirectedGraph::degree(int i){
+int DirectedGraph::indegree(int i){
 
-  if(edgeExists(i, i))
-    return (graph->degree(i) + 3) / 2;
-  else
-    return graph->degree(i) / 2;
+  int degree = 0;
+  for(int j = 0; j < graph->vertices(); j++){
+    if(j != i && graph->edgeExists(j, i))
+      degree++;
+  }
+
+  return degree;
 }
 
-bool UndirectedGraph::edgeExists(int i, int j){
+int DirectedGraph::outdegree(int i){
+
+  int degree = 0;
+  for(int j = 0; j < graph->vertices(); j++){
+    if(j != i && graph->edgeExists(i, j))
+      degree++;
+  }
+
+  return degree;
+}
+
+bool DirectedGraph::edgeExists(int i, int j){
 
   return graph->edgeExists(i, j);
 }
 
-int UndirectedGraph::edges(){
+int DirectedGraph::edges(){
 
-  return graph->edges()/2;
+  return graph->edges();
 }
 
-int UndirectedGraph::vertices(){
+int DirectedGraph::vertices(){
 
   return graph->vertices();
 }
 
-void UndirectedGraph::add(int i, int j){
+void DirectedGraph::add(int i, int j){
 
   graph->add(i, j);
-
-  if(i != j)
-    graph->add(j, i);
 }
 
-void UndirectedGraph::remove(int i, int j){
+void DirectedGraph::remove(int i, int j){
 
   graph->remove(i, j);
-  graph->remove(j, i);
 }
 
-void UndirectedGraph::dfs(void (*work)(int&)){
+void DirectedGraph::dfs(void (*work)(int&)){
 
   Color color[graph->vertices()];
 
@@ -159,7 +184,7 @@ void UndirectedGraph::dfs(void (*work)(int&)){
   }
 }
 
-void UndirectedGraph::bfs(void (*work)(int&)){
+void DirectedGraph::bfs(void (*work)(int&)){
   
   Color color[graph->vertices()];
 
@@ -202,4 +227,4 @@ void UndirectedGraph::bfs(void (*work)(int&)){
       }
   }
 }
-#endif /* ifndef UNDIRECTED_GRAPH */
+#endif /* ifndef DIRECTED_GRAPH */

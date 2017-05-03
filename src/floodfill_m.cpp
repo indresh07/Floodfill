@@ -1,3 +1,9 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Algorithm to solve flood fill problem using matrix traversal (using DFS)
+    Version : 1.3
+
+*/
+
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>

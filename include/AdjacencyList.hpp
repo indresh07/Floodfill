@@ -1,3 +1,8 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Implementation of graph using adjacency list representation
+    Version : 1.1
+
+*/
 #ifndef ADJACENCY_LIST
 #define ADJACENCY_LIST 1
 #include "GraphAdjacencyBase.hpp"
@@ -51,18 +56,6 @@ public:
      * Returns array of adjacent nodes of vertex i
      */ 
 	LinearList<LinearList<int> > getAdjacent();
-
-	void display(){
-		for(int i = 0; i < nVertices; i++){
-			node<int>* iterator = adjList[i].getIterator();
-
-			while(iterator){
-				cout<<iterator->data<<" ";
-				iterator = iterator->next;
-			}			
-			cout<<"\n";
-		}
-	}
 };
 
 AdjacencyList::AdjacencyList(int v){
@@ -105,8 +98,7 @@ void AdjacencyList::add(int i, int j){
 
 void AdjacencyList::remove(int i, int j){
 
-	if(edgeExists(i, j))
-		adjList[i].remove(j);
+	adjList[i].remove(j);
 }
 
 int AdjacencyList::degree(int i){

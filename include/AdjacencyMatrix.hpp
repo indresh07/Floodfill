@@ -1,6 +1,12 @@
+/*  Author : Indresh Kumar Gupta
+    Purpose : Implementation of graph using adjacency matrix representation
+    Version : 1.1
+
+*/
 #ifndef ADJACENCY_MATRIX
 #define ADJACENCY_MATRIX 1
 #include "GraphAdjacencyBase.hpp"
+
 using namespace std;
 using namespace cs202;
 
@@ -79,10 +85,8 @@ AdjacencyMatrix::~AdjacencyMatrix(){
 bool AdjacencyMatrix::edgeExists(int i, int j){
 
 
-	if(adjMatrix[i][j] == 1)
-		return true;
-	else
-		return false;
+	return (adjMatrix[i][j] == 1);
+
 }
 
 int AdjacencyMatrix::vertices(){
@@ -104,14 +108,12 @@ int AdjacencyMatrix::edges(){
 
 void AdjacencyMatrix::add(int i, int j){
 
-	if(!edgeExists(i, j))
-		adjMatrix[i][j] = 1;
+	adjMatrix[i][j] = 1;
 }
 
 void AdjacencyMatrix::remove(int i, int j){
 
-	if(edgeExists(i, j))
-		adjMatrix[i][j] = 0;
+	adjMatrix[i][j] = 0;
 }
 
 int AdjacencyMatrix::degree(int i){
