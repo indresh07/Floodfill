@@ -13,7 +13,7 @@ int m, n;
 enum Color {WHITE, GRAY, BLACK};
 
 void print(int& i){
-	cout<<"Move to ("<<(i/n + 1)<<","<<(i%n + 1)<<")\n";
+	cout<<"Move to ("<<(i/n)<<","<<(i%n)<<")\n";
 }
 
 bool floodfill(AdjacencyList& matrix, int& src, int& dest, void (*work)(int&)){
@@ -25,18 +25,19 @@ bool floodfill(AdjacencyList& matrix, int& src, int& dest, void (*work)(int&)){
 
   stack<int> dfsStack;
 
-  int i = src, j;
+  int i = src, j, pos;
   LinearList<LinearList<int> > adjNodes = matrix.getAdjacent();
   dfsStack.push(src);
   color[src] = GRAY;
   (*work)(src);
 
     while(!dfsStack.empty()){
-       i = dfsStack.top();
+       
+      i = dfsStack.top();
 
       if(adjNodes[i].size() > 0){
       	srand(time(NULL));
-      	int pos = rand() % adjNodes[i].size();
+      	pos = rand() % adjNodes[i].size();
         j = adjNodes[i][pos];
         adjNodes[i].erase_pos(pos);
         if(color[j] == WHITE){
@@ -51,8 +52,9 @@ bool floodfill(AdjacencyList& matrix, int& src, int& dest, void (*work)(int&)){
       }
       else{
         color[i] = BLACK;
-        (*work)(i);
         dfsStack.pop();
+        i = dfsStack.top();
+        (*work)(i);
       }
     }
 
@@ -75,7 +77,7 @@ int main(){
 	for(int i = 0; i < nUNodes; i++){
 		cout<<"["<<i+1<<"] : ";
 		cin>>x>>y;
-		uNodes.push_back((x-1)*n + y - 1);
+		uNodes.push_back(x*n + y);
 	}
 
 	try{
@@ -122,8 +124,6 @@ int main(){
 		exit(EXIT_SUCCESS);
 	}
 
-	matrix.display();
-
 	int src, dest;
 	cout<<"Enter source : ";
 	cin>>x>>y;
@@ -131,7 +131,7 @@ int main(){
 	if( x < 0 || x >= n || y < 0 || y >= m)
 		return 0;
 	
-	src = (x-1)*n + y - 1;
+	src = x*n + y;
 
 	cout<<"Enter destination : ";
 	cin>>x>>y;
@@ -139,7 +139,7 @@ int main(){
 	if( x < 0 || x >= n || y < 0 || y >= m)
 		return 0;
 
-	dest = (x-1)*n + y - 1;
+	dest = x*n + y;
 
 	if(floodfill(matrix, src, dest, print))
 		cout<<"Destination reached\n";
